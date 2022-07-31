@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <style>
+            canvas {
+                border: 1em solid black;
+            }
+        </style>
+    </head>
+    <body> 
+        <canvas id="canvas" width="400" height="400" />
+        <script>
+            const WIDTH = 400;
+            const HEIGHT = 400;
+
+            function drawCircle(context, x, y, radius, color) {
+                // Skip drawing if it's not in the viewport
+                if (x < 0 || x > WIDTH) { return }
+                if (y < 0 || y > HEIGHT ) { return }
+
+                context.beginPath();
+
+                context.arc(x, y, radius, 0.0, Math.PI * 2.0);
+                context.fillStyle = color;
+                context.fill();
+
+                context.lineWidth = 5.0;
+                context.strokeStyle = "#003300";
+                context.stroke();
+            }
+
+            const body = document.body;
+
+            const canvas = document.getElementById("canvas");
+            const context = canvas.getContext("2d");
+
+            const points = [];
+            for (let x = 0; x < 1_000_000; x++) {
+                let random_x = Math.random();
+                let random_y = Math.random();
+                let point = {
+                    x: x * random_x,
+                    y: x * random_y,
+                    radius: 5.0,
+                    color: "green",
+                };
+                points.push(point);
+            }
+
+            let val = document.createElement("p");
+            val.textContent = "Generated data!";
+            body.appendChild(val);
+
+            for (point of points) {
+                drawCircle(context, point.x, point.y, point.radius, point.color);
+            }
+
+            let val2 = document.createElement("p");
+            val2.textContent = "Drew data!";
+            body.appendChild(val2);
+            
+            // context.translate(500.0, 500.0);
+
+
+        </script>
+    </body>
+</html>
